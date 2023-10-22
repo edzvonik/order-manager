@@ -1,7 +1,7 @@
 --liquibase formatted sql
 
---changeSet edzvonik:2
-INSERT INTO "Product"(id, name, price) VALUES
+--changeSet edzvonik:1
+INSERT INTO "product"(id, name, price) VALUES
     (1, 'Флеш-накопитель 64 Гб', 20.00),
     (2, 'Монитор Dell UltraSharp 27"', 450.00),
     (3, 'Смартфон Samsung Galaxy S22', 799.00),
@@ -12,7 +12,7 @@ INSERT INTO "Product"(id, name, price) VALUES
     (8, 'Фотокамера Canon EOS 5D Mark IV', 2499.00),
     (9, 'Принтер HP LaserJet Pro M402n', 199.00);
 
-INSERT INTO "Order"(id, order_date) VALUES
+INSERT INTO "order"(id, order_date) VALUES
     (1, '2023-10-20'),
     (2, '2023-10-21'),
     (3, '2023-10-22'),
@@ -34,7 +34,7 @@ INSERT INTO "Order"(id, order_date) VALUES
     (19, '2023-11-07'),
     (20, '2023-11-08');
 
-INSERT INTO "OrderItem"(id, order_id, product_id, quantity, total_price) VALUES
+INSERT INTO "order_item"(id, order_id, product_id, quantity, total_price) VALUES
     (1, 1, 1, 2, 20.00),  -- 2 Флеш-накопитель 64 Гб
     (2, 1, 3, 1, 250.00),  -- 1 Наушники Sony WH-1000XM4
 

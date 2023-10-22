@@ -10,8 +10,7 @@ import io.swagger.v3.oas.annotations.info.Info;
                 description = "Order Manager", version = "1.0.0",
                 contact = @Contact(
                         name = "Dzvonik Evgenii",
-                        email = "ev.dzvonik@gmail.com",
-                        url = "https://dzvonik.ru"
+                        url = "https://github.com/edzvonik/order-manager"
                 )
         )
 )
