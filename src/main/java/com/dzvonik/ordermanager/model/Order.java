@@ -9,17 +9,13 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity
 @Getter
-@Setter
-@Builder
 @AllArgsConstructor
 @Table(name = "\"order\"")
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -33,5 +29,23 @@ public class Order {
 
     @Column(name = "order_date", nullable = false)
     private LocalDate date;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+
+        if (!id.equals(order.id)) return false;
+        return date.equals(order.date);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + date.hashCode();
+        return result;
+    }
 
 }

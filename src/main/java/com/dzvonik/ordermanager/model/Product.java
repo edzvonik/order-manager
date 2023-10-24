@@ -9,7 +9,6 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +16,6 @@ import java.math.BigDecimal;
 
 @Entity
 @Getter
-@Builder
 @AllArgsConstructor
 @Table(name = "product")
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -34,5 +32,25 @@ public class Product {
 
     @Column(name = "price", nullable = false)
     private BigDecimal price;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (!id.equals(product.id)) return false;
+        if (!name.equals(product.name)) return false;
+        return price.equals(product.price);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + price.hashCode();
+        return result;
+    }
 
 }
