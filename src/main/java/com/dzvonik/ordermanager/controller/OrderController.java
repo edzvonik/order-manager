@@ -43,21 +43,21 @@ public class OrderController {
     }
 
     @GetMapping
-    @Operation(summary = "Get All Orders", description = "Retrieve a list of all orders in the system.")
+    @Operation(summary = "Get All Orders", description = "Retrieve a list of all orders.")
     public ResponseEntity<List<OrderResponse>> getAllOrders() {
         List<OrderResponse> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
 
-    @GetMapping("/period")
-    @Operation(summary = "Get All Orders By Period", description = "Retrieve a list of all orders by period in the system.")
+    @GetMapping("/report")
+    @Operation(summary = "Get Report By Period", description = "Retrieve a list of all orders by period.")
     public ResponseEntity<List<OrderResponse>> getAllOrdersByPeriod(@Valid OrdersByPeriodRequest ordersByPeriodRequest) {
         List<OrderResponse> ordersByPeriod = orderService.getAllOrdersByPeriod(ordersByPeriodRequest);
         return ResponseEntity.ok(ordersByPeriod);
     }
 
     @DeleteMapping("/{orderId}")
-    @Operation(summary = "Delete Order by ID", description = "Delete an order from the system by its unique identifier.")
+    @Operation(summary = "Delete Order by ID", description = "Delete an order by its unique identifier.")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
         orderService.deleteOrder(orderId);
         return ResponseEntity.noContent().build();

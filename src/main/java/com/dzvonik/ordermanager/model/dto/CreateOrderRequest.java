@@ -9,11 +9,11 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Schema(description = "")
 public class CreateOrderRequest {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @NotBlank(message = "[Order] Date is required.")
+    @Schema(example = "2023-10-20")
     private String date;
 
     @NotEmpty(message = "[Order] Items is required.")
