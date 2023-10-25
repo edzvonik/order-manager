@@ -35,7 +35,7 @@
 
 ## Основные концепции
 
-![db-schema](https://drive.google.com/file/d/1bnuXQuP8MCMO4zhJMOE749brwjKlvKsN/view?usp=sharing)
+![db-schema](https://github.com/edzvonik/order-manager/blob/master/db-schema.png)
 
 Проект состоит из трех основных сущностей: Заказы, Позиции заказов и Продукты. 
 Заказы содержат информацию о дате заказа, позициях, а Позиции заказов связаны с Продуктами.
