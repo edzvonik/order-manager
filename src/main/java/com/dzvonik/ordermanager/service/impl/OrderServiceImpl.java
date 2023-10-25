@@ -57,20 +57,14 @@ public class OrderServiceImpl implements OrderService {
         }
 
         orderItemRepository.saveAll(orderItems);
-
-        OrderResponse orderResponse = mapper.map(newOrder, OrderResponse.class);
-        Link orderItemsLink = linkTo(methodOn(OrderItemController.class).getAllByOrder(newOrder.getId())).withRel("orderItems");
-        orderResponse.add(orderItemsLink);
-        return orderResponse;
+        return getOrderResponseWithLink(newOrder);
     }
 
     @Override
     public OrderResponse getById(Long orderId) {
-        Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Order not found with ID: " + orderId));
-        OrderResponse orderResponse = mapper.map(order, OrderResponse.class);
-        Link orderItemsLink = linkTo(methodOn(OrderItemController.class).getAllByOrder(orderId)).withRel("orderItems");
-        orderResponse.add(orderItemsLink);
-        return orderResponse;
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with ID: " + orderId));
+        return getOrderResponseWithLink(order);
     }
 
     @Override
@@ -116,6 +110,13 @@ public class OrderServiceImpl implements OrderService {
                     return orderResponse;
                 })
                 .collect(Collectors.toList());
+    }
+
+    private OrderResponse getOrderResponseWithLink(Order order) {
+        OrderResponse orderResponse = mapper.map(order, OrderResponse.class);
+        Link orderItemsLink = linkTo(methodOn(OrderItemController.class).getAllByOrder(order.getId())).withRel("orderItems");
+        orderResponse.add(orderItemsLink);
+        return orderResponse;
     }
 
 }
