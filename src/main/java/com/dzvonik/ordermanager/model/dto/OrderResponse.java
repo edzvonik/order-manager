@@ -1,17 +1,13 @@
 package com.dzvonik.ordermanager.model.dto;
 
 import lombok.Data;
-
-import java.math.BigDecimal;
-import java.util.List;
+import org.springframework.hateoas.RepresentationModel;
 
 @Data
-public class OrderResponse {
+public class OrderResponse extends RepresentationModel<OrderResponse> {
 
     private Long id;
     private String date;
-    private List<OrderItemResponse> orderItems;
-    private BigDecimal orderPrice;
 
 }
 

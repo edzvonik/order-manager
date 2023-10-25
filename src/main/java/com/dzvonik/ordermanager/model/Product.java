@@ -40,17 +40,12 @@ public class Product {
 
         Product product = (Product) o;
 
-        if (!id.equals(product.id)) return false;
-        if (!name.equals(product.name)) return false;
-        return price.equals(product.price);
+        return id.equals(product.id);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + price.hashCode();
-        return result;
+        return id.hashCode();
     }
 
 }

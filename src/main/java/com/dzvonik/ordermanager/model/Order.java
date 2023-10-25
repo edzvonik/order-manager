@@ -1,10 +1,13 @@
 package com.dzvonik.ordermanager.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -12,7 +15,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,6 +36,20 @@ public class Order {
     @Column(name = "order_date", nullable = false)
     private LocalDate date;
 
+    @OneToMany(
+            mappedBy = "order",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true
+    )
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+    public BigDecimal calculateOrderPrice() {
+        return orderItems.stream()
+                .map(OrderItem::getOrderItemPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,15 +57,12 @@ public class Order {
 
         Order order = (Order) o;
 
-        if (!id.equals(order.id)) return false;
-        return date.equals(order.date);
+        return id.equals(order.id);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + date.hashCode();
-        return result;
+        return id.hashCode();
     }
 
 }

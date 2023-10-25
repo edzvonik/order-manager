@@ -24,9 +24,9 @@ import java.math.BigDecimal;
 public class OrderItem {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_item_id_seq")
     @SequenceGenerator(name = "order_item_id_seq", sequenceName = "order_item_id_seq", allocationSize = 1)
-    @Column(name = "id")
     private Long id;
 
     @ManyToOne
@@ -43,11 +43,11 @@ public class OrderItem {
     @Column(name = "total_price", nullable = false)
     private BigDecimal orderItemPrice;
 
-    public OrderItem(Order order, Product product, int quantity, BigDecimal orderItemPrice) {
+    public OrderItem(Order order, Product product, int quantity) {
         this.order = order;
         this.product = product;
         this.quantity = quantity;
-        this.orderItemPrice = orderItemPrice;
+        this.orderItemPrice = product.getPrice().multiply(BigDecimal.valueOf(quantity));
     }
 
     @Override
@@ -57,21 +57,12 @@ public class OrderItem {
 
         OrderItem orderItem = (OrderItem) o;
 
-        if (quantity != orderItem.quantity) return false;
-        if (!id.equals(orderItem.id)) return false;
-        if (!order.equals(orderItem.order)) return false;
-        if (!product.equals(orderItem.product)) return false;
-        return orderItemPrice.equals(orderItem.orderItemPrice);
+        return id.equals(orderItem.id);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + order.hashCode();
-        result = 31 * result + product.hashCode();
-        result = 31 * result + quantity;
-        result = 31 * result + orderItemPrice.hashCode();
-        return result;
+        return id.hashCode();
     }
 
 }

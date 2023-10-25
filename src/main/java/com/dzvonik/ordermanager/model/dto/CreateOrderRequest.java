@@ -12,11 +12,11 @@ import java.util.List;
 public class CreateOrderRequest {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @NotBlank(message = "[Order] Date is required.")
+    @NotBlank(message = "Date is required.")
     @Schema(example = "2023-10-20")
     private String date;
 
-    @NotEmpty(message = "[Order] Items is required.")
+    @NotEmpty(message = "Items is required.")
     private List<OrderItemRequest> items;
 
 }
