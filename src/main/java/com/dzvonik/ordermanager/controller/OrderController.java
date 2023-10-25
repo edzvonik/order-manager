@@ -37,14 +37,14 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
-    @Operation(summary = "Get Order by ID", description = "Retrieve order details by its unique identifier.")
+    @Operation(summary = "Get by ID", description = "Retrieve order details by its unique identifier.")
     public ResponseEntity<OrderResponse> getById(@PathVariable Long orderId) {
         OrderResponse order = orderService.getById(orderId);
         return ResponseEntity.ok(order);
     }
 
     @GetMapping
-    @Operation(summary = "Get All Orders", description = "Retrieve a list of all orders.")
+    @Operation(summary = "Get All", description = "Retrieve a list of all orders.")
     public ResponseEntity<List<OrderResponse>> getAll() {
         List<OrderResponse> orders = orderService.getAll();
         return ResponseEntity.ok(orders);
@@ -58,7 +58,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/{orderId}")
-    @Operation(summary = "Delete Order by ID", description = "Delete an order by its unique identifier.")
+    @Operation(summary = "Delete by ID", description = "Delete an order by its unique identifier.")
     public ResponseEntity<Void> delete(@PathVariable Long orderId) {
         orderService.deleteById(orderId);
         return ResponseEntity.ok().build();

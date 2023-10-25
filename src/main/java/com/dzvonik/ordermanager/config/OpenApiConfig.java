@@ -6,10 +6,9 @@ import io.swagger.v3.oas.annotations.info.Info;
 
 @OpenAPIDefinition(
         info = @Info(
-                title = "Order Manager API",
-                description = "Order Manager", version = "1.0.0",
+                description = "Order Manager API", version = "1.0.0",
                 contact = @Contact(
-                        name = "Dzvonik Evgenii",
+                        name = "Order Manager on GitHub",
                         url = "https://github.com/edzvonik/order-manager"
                 )
         )

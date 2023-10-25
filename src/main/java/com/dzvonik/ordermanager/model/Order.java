@@ -28,9 +28,9 @@ import java.util.List;
 public class Order {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_id_seq")
     @SequenceGenerator(name = "order_id_seq", sequenceName = "order_id_seq", allocationSize = 1)
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "order_date", nullable = false)
@@ -54,9 +54,7 @@ public class Order {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Order order = (Order) o;
-
         return id.equals(order.id);
     }
 

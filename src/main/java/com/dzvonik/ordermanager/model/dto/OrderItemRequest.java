@@ -8,11 +8,11 @@ import lombok.Data;
 public class OrderItemRequest {
 
     @Min(0)
-    @NotBlank
+    @NotBlank(message = "ID is required.")
     private Long productId;
 
     @Min(0)
-    @NotBlank
+    @NotBlank(message = "Quantity is required.")
     private int quantity;
 
 }

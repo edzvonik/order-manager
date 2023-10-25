@@ -10,7 +10,7 @@ import lombok.Data;
 public class OrderRequest {
 
     @Min(0)
-    @NotBlank
+    @NotBlank(message = "ID is required.")
     private Long id;
 
     @Schema(example = "2023-10-20")

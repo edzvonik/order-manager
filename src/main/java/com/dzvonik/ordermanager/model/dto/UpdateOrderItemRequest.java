@@ -8,7 +8,7 @@ import lombok.Data;
 public class UpdateOrderItemRequest {
 
     @Min(0)
-    @NotBlank
+    @NotBlank(message = "Quantity is required.")
     private int quantity;
 
 }

@@ -26,14 +26,14 @@ public class OrderItemController {
     private final OrderItemService orderItemService;
 
     @GetMapping
-    @Operation(summary = "Get Order Items", description = "Retrieve order items detail by order unique identifier.")
+    @Operation(summary = "Get All By Order ID", description = "Retrieve order items detail by order unique identifier.")
     public ResponseEntity<List<OrderItemResponse>> getAllByOrder(@PathVariable Long orderId) {
         List<OrderItemResponse> orderItemsResponse = orderItemService.getAllByOrderId(orderId);
         return ResponseEntity.ok(orderItemsResponse);
     }
 
     @PatchMapping(value = "/{itemId}")
-    @Operation(summary = "Patch Order Item by ID", description = "Update an order item using its unique identifier.")
+    @Operation(summary = "Update by ID", description = "Update an order item using its unique identifier.")
     public ResponseEntity<OrderItemResponse> updateById(
             @PathVariable Long orderId,
             @PathVariable Long itemId,
@@ -43,7 +43,7 @@ public class OrderItemController {
     }
 
     @DeleteMapping(value = "/{itemId}")
-    @Operation(summary = "Delete Order by ID", description = "Delete an order item by its unique identifier.")
+    @Operation(summary = "Delete by ID", description = "Delete an order item by its unique identifier.")
     public ResponseEntity<Void> deleteById(
             @PathVariable Long orderId,
             @PathVariable Long itemId) {
