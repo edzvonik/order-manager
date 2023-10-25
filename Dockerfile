@@ -2,7 +2,7 @@ FROM openjdk:17
 
 WORKDIR /app
 
-ENV DB_NAME=jdbc:postgresql://database:5432/order_manager
+ENV DB_NAME=order_manager
 ENV DB_USER=postgres
 ENV DB_PASSWORD=postgres
 
