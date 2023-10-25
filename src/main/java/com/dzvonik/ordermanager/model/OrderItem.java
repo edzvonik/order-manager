@@ -47,7 +47,16 @@ public class OrderItem {
         this.order = order;
         this.product = product;
         this.quantity = quantity;
-        this.orderItemPrice = product.getPrice().multiply(BigDecimal.valueOf(quantity));
+        this.orderItemPrice = calculateOrderItemPrice(product.getPrice(), quantity);
+    }
+
+    public void changeQuantity(int newQuantity) {
+        this.quantity = newQuantity;
+        this.orderItemPrice = calculateOrderItemPrice(this.product.getPrice(), newQuantity);
+    }
+
+    private BigDecimal calculateOrderItemPrice(BigDecimal productPrice, int quantity) {
+        return productPrice.multiply(BigDecimal.valueOf(quantity));
     }
 
     @Override

@@ -15,13 +15,11 @@ import com.dzvonik.ordermanager.repository.OrderItemRepository;
 import com.dzvonik.ordermanager.repository.OrderRepository;
 import com.dzvonik.ordermanager.repository.ProductRepository;
 import com.dzvonik.ordermanager.service.OrderService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemRepository orderItemRepository;
     private final ProductRepository productRepository;
 
+    @Override
     public OrderResponse create(CreateOrderRequest createOrderRequest) {
         Order newOrder = mapper.map(createOrderRequest, Order.class);
         newOrder = orderRepository.save(newOrder);
@@ -58,27 +57,29 @@ public class OrderServiceImpl implements OrderService {
         }
 
         orderItemRepository.saveAll(orderItems);
-        // newOrder = orderRepository.save(newOrder);
 
         OrderResponse orderResponse = mapper.map(newOrder, OrderResponse.class);
-        Link orderItemsLink = linkTo(methodOn(OrderItemController.class).getOrderItemsByOrder(newOrder.getId())).withRel("orderItems");
+        Link orderItemsLink = linkTo(methodOn(OrderItemController.class).getAllByOrder(newOrder.getId())).withRel("orderItems");
         orderResponse.add(orderItemsLink);
         return orderResponse;
     }
 
+    @Override
     public OrderResponse getById(Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Order not found with ID: " + orderId));
         OrderResponse orderResponse = mapper.map(order, OrderResponse.class);
-        Link orderItemsLink = linkTo(methodOn(OrderItemController.class).getOrderItemsByOrder(orderId)).withRel("orderItems");
+        Link orderItemsLink = linkTo(methodOn(OrderItemController.class).getAllByOrder(orderId)).withRel("orderItems");
         orderResponse.add(orderItemsLink);
         return orderResponse;
     }
 
+    @Override
     public List<OrderResponse> getAll() {
         List<Order> orders = orderRepository.findAll();
         return convertOrdersToOrderResponses(orders);
     }
 
+    @Override
     public List<ReportOrderResponse> getReportByPeriod(PeriodRequest periodRequest) {
         LocalDate start = mapper.map(periodRequest.getStart(), LocalDate.class);
         LocalDate end = mapper.map(periodRequest.getEnd(), LocalDate.class);
@@ -101,25 +102,16 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
     }
 
-    public void delete(Long orderId) {
-        orderRepository.deleteById(orderId);
-    }
-
-//    public OrderResponse update(List<PatchOperation> patchOperations) {
-//
-//    }
-
-    private BigDecimal calculateOrderPrice(List<OrderItem> orderItems) {
-        return orderItems.stream()
-                .map(OrderItem::getOrderItemPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    @Override
+    public void deleteById(Long id) {
+        orderRepository.deleteById(id);
     }
 
     private List<OrderResponse> convertOrdersToOrderResponses(List<Order> orders) {
         return orders.stream()
                 .map(order -> {
                     OrderResponse orderResponse = mapper.map(order, OrderResponse.class);
-                    Link orderItemsLink = linkTo(methodOn(OrderItemController.class).getOrderItemsByOrder(order.getId())).withRel("orderItems");
+                    Link orderItemsLink = linkTo(methodOn(OrderItemController.class).getAllByOrder(order.getId())).withRel("orderItems");
                     orderResponse.add(orderItemsLink);
                     return orderResponse;
                 })

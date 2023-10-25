@@ -1,13 +1,17 @@
 package com.dzvonik.ordermanager.controller;
 
 import com.dzvonik.ordermanager.model.dto.OrderItemResponse;
+import com.dzvonik.ordermanager.model.dto.UpdateOrderItemRequest;
 import com.dzvonik.ordermanager.service.OrderItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,9 +27,28 @@ public class OrderItemController {
 
     @GetMapping
     @Operation(summary = "Get Order Items", description = "Retrieve order items detail by order unique identifier.")
-    public ResponseEntity<List<OrderItemResponse>> getOrderItemsByOrder(@PathVariable Long orderId) {
-        List<OrderItemResponse> orderItemsResponse = orderItemService.getOrderItemsByOrderId(orderId);
+    public ResponseEntity<List<OrderItemResponse>> getAllByOrder(@PathVariable Long orderId) {
+        List<OrderItemResponse> orderItemsResponse = orderItemService.getAllByOrderId(orderId);
         return ResponseEntity.ok(orderItemsResponse);
+    }
+
+    @PatchMapping(value = "/{itemId}")
+    @Operation(summary = "Patch Order Item by ID", description = "Update an order item using its unique identifier.")
+    public ResponseEntity<OrderItemResponse> updateById(
+            @PathVariable Long orderId,
+            @PathVariable Long itemId,
+            @RequestBody UpdateOrderItemRequest updateOrderItemRequest) {
+        OrderItemResponse updatedOrderItem = orderItemService.updateById(itemId, updateOrderItemRequest);
+        return ResponseEntity.ok(updatedOrderItem);
+    }
+
+    @DeleteMapping(value = "/{itemId}")
+    @Operation(summary = "Delete Order by ID", description = "Delete an order item by its unique identifier.")
+    public ResponseEntity<Void> deleteById(
+            @PathVariable Long orderId,
+            @PathVariable Long itemId) {
+        orderItemService.deleteById(itemId);
+        return ResponseEntity.ok().build();
     }
 
 }

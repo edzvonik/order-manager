@@ -2,7 +2,6 @@ package com.dzvonik.ordermanager.service;
 
 import com.dzvonik.ordermanager.model.dto.CreateOrderRequest;
 import com.dzvonik.ordermanager.model.dto.OrderResponse;
-import com.dzvonik.ordermanager.model.dto.PatchOperation;
 import com.dzvonik.ordermanager.model.dto.PeriodRequest;
 import com.dzvonik.ordermanager.model.dto.ReportOrderResponse;
 
@@ -14,7 +13,6 @@ public interface OrderService {
     OrderResponse getById(Long orderId);
     List<OrderResponse> getAll();
     List<ReportOrderResponse> getReportByPeriod(PeriodRequest periodRequest);
-    void delete(Long orderId);
-    // OrderResponse update(List<PatchOperation> patchOperations);
+    void deleteById(Long id);
 
 }

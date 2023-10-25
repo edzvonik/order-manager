@@ -29,4 +29,19 @@ public class OrderItemTest {
         assertEquals(new BigDecimal("30.0"), orderItem.getOrderItemPrice());
     }
 
+    @Test
+    public void testChangeQuantityAndCalcItemPrice() {
+        Order order = mock(Order.class);
+        Product product = mock(Product.class);
+
+        when(product.getPrice()).thenReturn(new BigDecimal("10.0"));
+        when(order.getId()).thenReturn(1L);
+
+        OrderItem orderItem = new OrderItem(order, product, 3);
+        orderItem.changeQuantity(4);
+
+        assertEquals(4, orderItem.getQuantity());
+        assertEquals(new BigDecimal("40.0"), orderItem.getOrderItemPrice());
+    }
+
 }

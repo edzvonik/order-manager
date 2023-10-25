@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,15 +57,11 @@ public class OrderController {
         return ResponseEntity.ok(reportByPeriod);
     }
 
-//    @PatchMapping
-//    @Operation(summary = "", description = "")
-//    public ResponseEntity<OrderResponse> patch(@RequestBody List<PatchOperation> patchOperarations)
-
     @DeleteMapping("/{orderId}")
     @Operation(summary = "Delete Order by ID", description = "Delete an order by its unique identifier.")
     public ResponseEntity<Void> delete(@PathVariable Long orderId) {
-        orderService.delete(orderId);
-        return ResponseEntity.noContent().build();
+        orderService.deleteById(orderId);
+        return ResponseEntity.ok().build();
     }
 
 }
